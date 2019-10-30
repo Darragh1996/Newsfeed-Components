@@ -113,15 +113,49 @@ const data = [
 
 */
 
-const article = document.createElement('div');
-const title = document.createElement('h2');
-const paragraph1 = document.createElement('p');
-const paragraph2 = document.createElement('p');
-const paragraph3 = document.createElement('p');
-const span = document.createElement('span');
+function createComponent(title, date, para1, para2, para3){
+  const article = document.createElement('div');
+  const heading = document.createElement('h2');
+  const dateParagraph = document.createElement('p')
+  const paragraph1 = document.createElement('p');
+  const paragraph2 = document.createElement('p');
+  const paragraph3 = document.createElement('p');
+  const span = document.createElement('span');
 
-article.append(title);
-article.append(paragraph1);
-article.append(paragraph2);
-article.append(paragraph3);
-article.append(span);
+  article.append(heading);
+  article.append(dateParagraph);
+  article.append(paragraph1);
+  article.append(paragraph2);
+  article.append(paragraph3);
+  article.append(span);
+
+  article.classList.add('article');
+  dateParagraph.classList.add('date');
+  span.classList.add('expandButton');
+
+  heading.textContent = title;
+  dateParagraph.textContent = date;
+  paragraph1.textContent = para1;
+  paragraph2.textContent = para2;
+  paragraph3.textContent = para3;
+  span.textContent = 'Expand'
+
+  span.addEventListener('click', function(event){
+    article.classList.toggle('article-open')
+    if(span.textContent == 'Expand'){
+      span.textContent = 'Collapse'
+    }else{
+      span.textContent = 'Expand'
+    }
+  })
+
+  return article;
+
+}
+
+const articles = document.querySelector('.articles');
+
+data.forEach(entry =>{
+  articles.append(createComponent(entry.title, entry.date, entry.firstParagraph, entry.secondParagraph, entry.thirdParagraph))
+})
+
